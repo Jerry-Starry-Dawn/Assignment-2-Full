@@ -3,9 +3,23 @@ import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
 import { columns } from './components/columns'
 import { DataTable } from './components/data-table'
-import { publishers } from './data/publishers'
+// import { publishers } from './data/publishers'
+import { publisherServices } from '@/services/publisher.service'
+import { useEffect, useState } from 'react'
 
-export default function Tasks() {
+
+export default function Publishers() {
+
+  const [data, setData] = useState([])
+
+  useEffect(() => {
+    const getDataPublisher = async () => {
+      const res = await publisherServices.getPublishers()
+      setData(res.data.items)
+    }
+    getDataPublisher()
+  }, [])
+
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
@@ -27,7 +41,7 @@ export default function Tasks() {
           </div>
         </div>
         <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-          <DataTable data={publishers} columns={columns} />
+          <DataTable data={data} columns={columns} />
         </div>
       </LayoutBody>
     </Layout>

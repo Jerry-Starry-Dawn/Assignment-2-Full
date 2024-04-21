@@ -1,6 +1,6 @@
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { Row } from '@tanstack/react-table'
-
+import { useNavigate } from "react-router-dom";
 import { Button } from '@/components/custom/button'
 import {
   DropdownMenu,
@@ -11,8 +11,8 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu'
 
-import { DropdownMenuRadioGroup, DropdownMenuSub, DropdownMenuSubContent, DropdownMenuSubTrigger } from '@radix-ui/react-dropdown-menu'
 import { publisherSchema } from '../data/schema'
+import { publisherServices } from '@/services/publisher.service'
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -23,6 +23,12 @@ export function DataTableRowActions<TData>({
 }: DataTableRowActionsProps<TData>) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const publisher = publisherSchema.parse(row.original)
+  const navigate = useNavigate();
+  const handleDelete = async (id : string) => {
+    const res = await publisherServices.deletePublisher(id)
+    navigate(0)
+    console.log(res)
+  }
 
   return (
     <DropdownMenu>
@@ -39,21 +45,24 @@ export function DataTableRowActions<TData>({
         <DropdownMenuItem>Edit</DropdownMenuItem>
         {/* <DropdownMenuItem>Make a copy</DropdownMenuItem>
         <DropdownMenuItem>Favorite</DropdownMenuItem> */}
-        {/* <DropdownMenuSeparator /> */}
-        <DropdownMenuSub>
+        {/* <DropdownMenuSeparator />
+        <DropdownMenuItem>View {publisher.name}</DropdownMenuItem> */}
+        {/* <DropdownMenuSub>
           <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
           <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup value={publisher.name}>
-              {/* {labels.map((label) => (
+            <DropdownMenuRadioGroup value={publisher.name}> */}
+        {/* {labels.map((label) => (
                 <DropdownMenuRadioItem key={label.value} value={label.value}>
                   {label.label}
                 </DropdownMenuRadioItem>
               ))} */}
-            </DropdownMenuRadioGroup>
+        {/* </DropdownMenuRadioGroup>
           </DropdownMenuSubContent>
-        </DropdownMenuSub>
+        </DropdownMenuSub> */}
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={
+          () => handleDelete(String(publisher.id))
+        }>
           Delete
           <DropdownMenuShortcut>⌫</DropdownMenuShortcut>
         </DropdownMenuItem>

@@ -3,8 +3,7 @@ import { ColumnDef } from '@tanstack/react-table'
 import { Badge } from '@/components/ui/badge'
 import { DataTableColumnHeader } from './data-table-column-header'
 import { DataTableRowActions } from './data-table-row-actions'
-
-import { Book } from '../data/schema'
+import { Book } from '@/types/book'
 
 export const columns: ColumnDef<Book>[] = [
   {
@@ -67,14 +66,12 @@ export const columns: ColumnDef<Book>[] = [
       <DataTableColumnHeader column={column} title='Publisher' />
     ),
     cell: ({ row }) => {
+      const { name } = row.original.publisher
       return (
         <div className='flex items-center'>
-          <span>{row.getValue("publisher")}</span>
+          <span>{name}</span>
         </div>
       )
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
     },
   },
   {
@@ -98,12 +95,14 @@ export const columns: ColumnDef<Book>[] = [
       <DataTableColumnHeader column={column} title='Authors' />
     ),
     cell: ({ row }) => {
-      const royalty = row.original.royalty
+      const { royalty, bookAuthors } = row.original
       return (
         <div className='flex space-x-2'>
           {<Badge variant='outline'>{royalty}</Badge>}
           <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('bookAuthors')}
+            {bookAuthors
+              .map(({ author }) => `${author.firstName} ${author.lastName}`)
+              .join(', ')}
           </span>
         </div>
       )
@@ -118,7 +117,9 @@ export const columns: ColumnDef<Book>[] = [
       return (
         <div className='flex space-x-2'>
           <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('publishedDate')}
+            {new Date(
+              row.getValue<string>('publishedDate')
+            ).toLocaleDateString()}
           </span>
         </div>
       )

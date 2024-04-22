@@ -3,9 +3,26 @@ import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
 import { columns } from './components/columns'
 import { DataTable } from './components/data-table'
-import { books } from './data/books'
+import { Book } from '@/types/book'
+import { useEffect, useState } from 'react'
+import { bookService } from '@/services/book.service'
 
 export default function Books() {
+  const [books, setBooks] = useState<Book[]>([])
+
+  useEffect(() => {
+    const getBooks = async () => {
+      try {
+        const pagination = await bookService.getBooks()
+        setBooks(pagination.data.items)
+      } catch (error) {
+        console.error(error)
+        setBooks([])
+      }
+    }
+    getBooks()
+  }, [])
+
   return (
     <Layout>
       {/* ===== Top Heading ===== */}

@@ -32,7 +32,7 @@ public class BookService : IBookService
     public Task<PaginatedList<BookModel>> GetBooks(GetBooksRequest request)
     {
         var books = _bookRepository.GetAll()
-            .Include(x => x.BookAuthors)
+            .Include(x => x.BookAuthors).ThenInclude(x=> x.Author)
             .Include(x => x.Publisher)
             .AsQueryable();
         
@@ -88,7 +88,6 @@ public class BookService : IBookService
         
         var book = new Book()
         {
-            Id = bookId,
             PublishedDate = date,
             Advance = request.Advance,
             Notes = request.Notes,
@@ -102,6 +101,7 @@ public class BookService : IBookService
         
         
         await _bookRepository.AddAsync(book);
+        await _unitOfWork.CommitAsync();
         
         foreach (var id in request.AuthorIds)
         {
@@ -114,7 +114,7 @@ public class BookService : IBookService
             var bookAuthor = new BookAuthor()
             {
                 AuthorId = id,
-                BookId = bookId,
+                BookId = book.Id,
                 RoyaltyPercentage = request.Royalty,
                 AuthorOrder = "Something"
             };

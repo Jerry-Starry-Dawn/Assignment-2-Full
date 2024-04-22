@@ -7,6 +7,8 @@ import { DataTableViewOptions } from '../components/data-table-view-options'
 
 import { priorities, statuses } from '../data/data'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
+import CreateModal from './create-modal'
+import { useState } from 'react'
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -16,8 +18,9 @@ export function DataTableToolbar<TData>({
   table,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
-
+  const [openCreateModal, setOpenCreateModal] = useState(false)
   return (
+    <>
     <div className='flex items-center justify-between'>
       <div className='flex flex-1 flex-col-reverse items-start gap-y-2 sm:flex-row sm:items-center sm:space-x-2'>
         <Input
@@ -58,11 +61,15 @@ export function DataTableToolbar<TData>({
       <DataTableViewOptions table={table} />
       <Button
         variant='default'
-        onClick={() => console.log('Create button clicked')}
+        onClick={() => setOpenCreateModal(true)}
         className='h-8 px-3 lg:px-4 ml-3'
       >
         Create
       </Button>
     </div>
+    <CreateModal isOpen={openCreateModal} onClose={() => {
+      setOpenCreateModal(false)
+    }} />
+    </>
   )
 }

@@ -13,6 +13,9 @@ import {
 
 import { publisherSchema } from '../data/schema'
 import { publisherServices } from '@/services/publisher.service'
+import UpdateModal from './update-modal';
+import { useState } from 'react';
+
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>
@@ -30,7 +33,10 @@ export function DataTableRowActions<TData>({
     console.log(res)
   }
 
+  const [openEditModal, setOpenEditModal] = useState(false)
+
   return (
+    <>
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
@@ -42,7 +48,9 @@ export function DataTableRowActions<TData>({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-[160px]'>
-        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <DropdownMenuItem
+        onClick={() => setOpenEditModal(true)}
+        >Edit</DropdownMenuItem>
         {/* <DropdownMenuItem>Make a copy</DropdownMenuItem>
         <DropdownMenuItem>Favorite</DropdownMenuItem> */}
         {/* <DropdownMenuSeparator />
@@ -68,5 +76,11 @@ export function DataTableRowActions<TData>({
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+    <UpdateModal isOpen={openEditModal} 
+    id = {String(publisher.id)}
+    onClose={() => {
+      setOpenEditModal(false)
+    }} />
+    </>
   )
 }

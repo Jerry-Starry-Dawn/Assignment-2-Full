@@ -41,7 +41,7 @@ export const columns: ColumnDef<Author>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'first_name',
+    accessorKey: 'firstName',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='FirstName' />
     ),
@@ -49,21 +49,21 @@ export const columns: ColumnDef<Author>[] = [
       return (
         <div className='flex space-x-2'>
           <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('first_name')}
+            {row.getValue('firstName')}
           </span>
         </div>
       )
     },
   },
   {
-    accessorKey: 'last_name',
+    accessorKey: 'lastName',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='LastName' />
     ),
     cell: ({ row }) => {
       return (
         <div className='flex items-center'>
-          <span>{row.getValue("last_name")}</span>
+          <span>{row.getValue("lastName")}</span>
         </div>
       )
     },
@@ -104,7 +104,37 @@ export const columns: ColumnDef<Author>[] = [
     },
   },
   {
-    accessorKey: 'email_address',
+    accessorKey: 'state',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='State' />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className='flex space-x-2'>
+          <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
+            {row.getValue('state')}
+          </span>
+        </div>
+      )
+    },
+  },
+  {
+    accessorKey: 'zip',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='ZIP' />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className='flex space-x-2'>
+          <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
+            {row.getValue('zip')}
+          </span>
+        </div>
+      )
+    },
+  },
+  {
+    accessorKey: 'email',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Email' />
     ),
@@ -112,7 +142,7 @@ export const columns: ColumnDef<Author>[] = [
       return (
         <div className='flex space-x-2'>
           <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('email_address')}
+            {row.getValue('email')}
           </span>
         </div>
       )

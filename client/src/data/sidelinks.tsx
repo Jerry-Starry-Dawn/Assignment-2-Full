@@ -1,4 +1,5 @@
 import {
+  IconBook,
   IconChecklist,
   IconHexagonNumber1,
   IconHexagonNumber2,
@@ -40,12 +41,12 @@ export const sidelinks: SideLink[] = [
     href: '/publishers',
     icon: <IconChecklist size={18} />,
   },
-  // {
-  //   title: 'Chats',
-  //   label: '9',
-  //   href: '/chats',
-  //   icon: <IconMessages size={18} />,
-  // },
+  {
+    title: 'Books',
+    label: '',
+    href: '/books',
+    icon: <IconBook size={18} />,
+  },
   {
     title: 'Authentication',
     label: '',

@@ -52,9 +52,9 @@ const router = createBrowserRouter([
         }),
       },
       {
-        path: 'chats',
+        path: 'books',
         lazy: async () => ({
-          Component: (await import('@/components/coming-soon')).default,
+          Component: (await import('./pages/books')).default,
         }),
       },
       {

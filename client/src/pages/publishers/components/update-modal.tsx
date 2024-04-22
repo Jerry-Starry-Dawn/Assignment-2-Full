@@ -2,7 +2,7 @@ import { Button } from '@/components/custom/button'
 import { Input } from '@/components/ui/input'
 import { publisherServices } from '@/services/publisher.service';
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 
 
@@ -38,6 +38,20 @@ function UpdateModal({
     }
     console.log(res)
   }
+
+  useEffect(() => {
+    const handlePublisherDetail = async (id: string) => {
+      const res = await publisherServices.getPublisherDetail(id)
+      if (res.data) {
+        console.log(res.data)
+        setName(res.data.name)
+        setCity(res.data.city)
+        setState(res.data.state)
+        setCountry(res.data.country)
+      }
+    }
+    handlePublisherDetail(id)
+  }, [id])
 
   return (
     <>

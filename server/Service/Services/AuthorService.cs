@@ -91,6 +91,7 @@ public class AuthorService : IAuthorService
         author.Zip = request.Zip;
 
         var result = _authorRepository.Update(author);
+        await _uow.CommitAsync();
         return _mapper.Map<AuthorModel>(author);
     }
 

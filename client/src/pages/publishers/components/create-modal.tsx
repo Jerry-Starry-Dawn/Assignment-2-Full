@@ -21,6 +21,7 @@ function CreateModal({
   const navigate = useNavigate();
 
   const handleCreatePublisher = async () => {
+    if(!name || !city || !state || !country) return alert('Please fill all fields')
     const res = await publisherServices.createPublisher({
       name: name,
       city: city,

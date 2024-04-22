@@ -82,6 +82,7 @@ function UpdateModal({
               >
                 <Dialog.Panel className="w-full transform overflow-hidden rounded-lg border border-[#49494d] bg-[#FFF] p-6 text-left align-middle shadow-xl transition-all lg:w-[692px]">
                   <div className='flex flex-col gap-2 p-2'>
+                    <h1 className='font-bold text-lg'>Update Publisher</h1>
                     <Input placeholder='Name' value={name} onChange={
                       (e) => setName(e.target.value)
                     }/>
